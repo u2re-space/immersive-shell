@@ -1,10 +1,10 @@
 /* ai-refactor: optimized/refactored at 2026-02-13T00:24:03Z */
 
-@layer shell.tokens, shell.base, shell.components, shell.utilities, shell.overrides;
+@layer shell.tokens, shell.immersive, shell.components, shell.utilities, shell.overrides;
 
 @layer shell.tokens {
-    :root:has(.app-shell, .app-shell[data-style="base"], .app-shell[data-style="raw"]),
-    :where(.app-shell, .app-shell[data-style="base"], .app-shell[data-style="raw"]) {
+    :root:has(.app-shell, .app-shell[data-style="immersive"], .app-shell[data-style="raw"]),
+    :where(.app-shell, .app-shell[data-style="immersive"], .app-shell[data-style="raw"]) {
         color-scheme: light dark;
 
         /* colors */
@@ -20,13 +20,13 @@
         --shell-status-fg: light-dark(var(--color-on-surface), var(--color-on-surface));
 
         /* layout */
-        --shell-nav-height: var(--shell-nav-height-base, 48px);
+        --shell-nav-height: var(--shell-nav-height-immersive, 48px);
         --shell-sidebar-width: 0;
         --shell-status-height: 24px;
         --shell-padding: 0;
     }
 
-    :is(:root, html):has([data-shell="base"][data-theme="dark"]) {
+    :is(:root, html):has([data-shell="immersive"][data-theme="dark"]) {
         --shell-bg: light-dark(var(--color-surface), var(--color-surface));
         --shell-fg: light-dark(var(--color-on-surface), var(--color-on-surface));
         --shell-nav-bg: light-dark(var(--color-surface-container-high), var(--color-surface-container-high));
@@ -34,7 +34,7 @@
         --shell-nav-border: light-dark(var(--color-outline-variant), var(--color-outline-variant));
     }
 
-    /* cw-shell-base :host — fill grid cell; shadow layout is not document-level */
+    /* cw-shell-immersive :host — fill grid cell; shadow layout is not document-level */
     :host:has(> .app-shell) {
         display: block;
         min-inline-size: 0;
@@ -53,13 +53,13 @@
     }
 }
 
-@layer shell.base {
+@layer shell.immersive {
     /* Match inner chrome surface; avoids host vs .app-shell mismatch when theme updates (see MinimalShell). */
     :host:has(> .app-shell) {
         background-color: var(--shell-bg);
     }
 
-    :where(.app-shell, .app-shell[data-style="base"], .app-shell[data-style="raw"]) {
+    :where(.app-shell, .app-shell[data-style="immersive"], .app-shell[data-style="raw"]) {
         position: absolute;
         inset: 0;
         display: flex;
@@ -102,7 +102,7 @@
 }
 
 @layer shell.components {
-    :where(.app-shell, .app-shell[data-style="base"], .app-shell[data-style="raw"]) {
+    :where(.app-shell, .app-shell[data-style="immersive"], .app-shell[data-style="raw"]) {
         .loading-spinner {
             inline-size: 32px;
             block-size: 32px;
@@ -269,7 +269,7 @@
     
 
     @media (max-width: 480px) {
-        :where(.app-shell, .app-shell[data-style="base"], .app-shell[data-style="raw"]) {
+        :where(.app-shell, .app-shell[data-style="immersive"], .app-shell[data-style="raw"]) {
             --shell-nav-height: 48px;
         }
     }
@@ -336,7 +336,7 @@
         }
     }
 
-    :is(html, body):has([data-shell="base"]) {
+    :is(html, body):has([data-shell="immersive"]) {
         --shell-nav-height: 0;
         --shell-content-padding: 0;
         --shell-sidebar-width: 0;

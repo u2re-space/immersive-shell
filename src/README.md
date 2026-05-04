@@ -1,6 +1,6 @@
-# Base shell content
+# Immersive shell content
 
-Web component, base shell of `${view}` application
+Web component, immersive shell of `${view}` application
 
 |---------------------------|
 |                           |

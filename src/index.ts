@@ -1,7 +1,7 @@
 /**
- * Base Shell
+ * Immersive Shell
  *
- * Base shell with no frames, navigation UI, or chrome.
+ * Immersive shell with no frames, navigation UI, or chrome.
  * Just a content container with theme support.
  *
  * Use cases:
@@ -16,15 +16,15 @@ import type { ShellId, ShellLayoutConfig, ShellTheme } from "shells/types";
 
 // @ts-ignore - SCSS import
 import style from "./base.scss?inline";
-import { ShellBase } from "frontend/shells/core/shells";
+import { ShellBase } from "boot/ts/shells";
 
 // ============================================================================
 // BASE SHELL IMPLEMENTATION
 // ============================================================================
 
-export class BaseShell extends ShellBase {
-    id: ShellId = "base";
-    name = "Base";
+export class ImmersiveShell extends ShellBase {
+    id: ShellId = "immersive";
+    name = "Immersive";
 
     layout: ShellLayoutConfig = {
         hasSidebar: false,
@@ -38,7 +38,7 @@ export class BaseShell extends ShellBase {
 
     protected createLayout(): HTMLElement {
         const root = H`
-            <div class="app-shell" data-shell="base" data-style="base">
+            <div class="app-shell" data-shell="immersive" data-style="immersive">
                 <div class="app-shell__viewport">
                     <main class="app-shell__content" data-shell-content role="main">
                         <div class="app-shell__loading">
@@ -112,7 +112,7 @@ export class BaseShell extends ShellBase {
     async mount(container: HTMLElement): Promise<void> {
         await super.mount(container);
 
-        // Base shell uses simplified navigation
+        // Immersive shell uses simplified navigation
         this.setupHashNavigation();
         this.setupPopstateNavigation();
         this.bindWindowControlsOverlay();
@@ -180,10 +180,10 @@ export class BaseShell extends ShellBase {
 // ============================================================================
 
 /**
- * Create a base shell instance
+ * Create a immersive shell instance
  */
-export function createShell(_container: HTMLElement): BaseShell {
-    return new BaseShell();
+export function createShell(_container: HTMLElement): ImmersiveShell {
+    return new ImmersiveShell();
 }
 
 export default createShell;

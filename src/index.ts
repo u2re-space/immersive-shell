@@ -41,12 +41,12 @@ export class ImmersiveShell extends ShellBase {
             <div class="app-shell" data-shell="immersive" data-style="immersive">
                 <div class="app-shell__viewport">
                     <main class="app-shell__content" data-shell-content role="main">
-                        <div class="app-shell__loading">
-                            <div class="loading-spinner"></div>
-                            <span>Loading...</span>
-                        </div>
                         <slot name="view"></slot>
                     </main>
+                    <div class="app-shell__loading" data-shell-loading role="status" aria-live="polite">
+                        <div class="loading-spinner" aria-hidden="true"></div>
+                        <span class="app-shell__loading-label">Loading...</span>
+                    </div>
                     <div class="app-shell__overlays" data-shell-overlays></div>
                 </div>
                 <div class="app-shell__status" data-shell-status hidden aria-live="polite"></div>
@@ -103,7 +103,10 @@ export class ImmersiveShell extends ShellBase {
             this.rootElement.appendChild(element);
         }
 
-        const loading = this.contentContainer.querySelector(".app-shell__loading") as HTMLElement | null;
+        const shellRoot =
+            (this.rootElement?.shadowRoot?.querySelector(".app-shell") as HTMLElement | null) ??
+            (this.rootElement as HTMLElement | null);
+        const loading = shellRoot?.querySelector(".app-shell__loading") as HTMLElement | null;
         if (loading) loading.hidden = true;
 
         this.currentViewElement = element;

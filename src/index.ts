@@ -16,7 +16,7 @@ import type { ShellId, ShellLayoutConfig, ShellTheme } from "shells/types";
 
 // @ts-ignore - SCSS import
 import style from "./base.scss?inline";
-import { ShellBase } from "boot/ts/shells";
+import { ShellBase } from "boot/shells";
 
 // ============================================================================
 // BASE SHELL IMPLEMENTATION

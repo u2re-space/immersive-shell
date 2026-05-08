@@ -17,6 +17,7 @@ import type { ShellId, ShellLayoutConfig, ShellTheme } from "shells/types";
 // @ts-ignore - SCSS import
 import style from "./base.scss?inline";
 import { ShellBase } from "boot/shells";
+import { SHELL_SLOT } from "boot/shell-slots";
 
 // ============================================================================
 // BASE SHELL IMPLEMENTATION
@@ -36,18 +37,34 @@ export class ImmersiveShell extends ShellBase {
     private wcoGeometryHandler: (() => void) | null = null;
     private wcoResizeHandler: (() => void) | null = null;
 
+    /** Content shell turns this off so only page overlays apply (no wallpaper/speed-dial layer). */
+    protected includeUnderlyingSlot(): boolean {
+        return true;
+    }
+
     protected createLayout(): HTMLElement {
+        const underlying = this.includeUnderlyingSlot()
+            ? H`
+            <div class="app-shell__underlying">
+                <slot name="${SHELL_SLOT.underlying}"></slot>
+            </div>
+        `
+            : "";
+
         const root = H`
             <div class="app-shell" data-shell="immersive" data-style="immersive">
                 <div class="app-shell__viewport">
+                    ${underlying}
                     <main class="app-shell__content" data-shell-content role="main">
-                        <slot name="view"></slot>
+                        <slot></slot>
                     </main>
                     <div class="app-shell__loading" data-shell-loading role="status" aria-live="polite">
                         <div class="loading-spinner" aria-hidden="true"></div>
                         <span class="app-shell__loading-label">Loading...</span>
                     </div>
-                    <div class="app-shell__overlays" data-shell-overlays></div>
+                    <div class="app-shell__overlays" data-shell-overlays>
+                        <slot name="${SHELL_SLOT.overlay}"></slot>
+                    </div>
                 </div>
                 <div class="app-shell__status" data-shell-status hidden aria-live="polite"></div>
             </div>
@@ -73,9 +90,8 @@ export class ImmersiveShell extends ShellBase {
     }
 
     /**
-     * Match MinimalShell: assign `slot="view"` and append the view to the shell host (light DOM).
-     * Document-level view CSS (`views.scss`, adopted view sheets) does not pierce shadow roots; views
-     * must not live only under `.app-shell__content` inside the shadow tree.
+     * Routed views use the default (unnamed) slot inside `<main data-shell-content>`; append to the
+     * shell host in light DOM so document-level view CSS still targets roots that pierce shadow.
      */
     protected renderView(element: HTMLElement): void {
         if (!this.contentContainer || !this.rootElement) {
@@ -97,7 +113,7 @@ export class ImmersiveShell extends ShellBase {
 
         element.setAttribute("data-view", this.currentView.value);
         element.hidden = false;
-        element.slot = "view";
+        element.removeAttribute("slot");
 
         if (!this.rootElement.contains(element)) {
             this.rootElement.appendChild(element);

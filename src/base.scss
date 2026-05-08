@@ -121,9 +121,25 @@
         align-self: stretch;
     }
 
+    /* Behind routed views: wallpaper, canvas, speed dial — light-DOM `slot="underlying"` on `cw-shell-*`. */
+    .app-shell__underlying {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+        min-inline-size: 0;
+        min-block-size: 0;
+
+        & > slot::slotted(*) {
+            pointer-events: auto;
+        }
+    }
+
     .app-shell__content {
         position: absolute;
         inset: 0;
+        z-index: 1;
         display: flex;
         flex-direction: column;
         inline-size: stretch;
@@ -143,6 +159,15 @@
             flex: 1 1 auto;
             min-block-size: 0;
             min-inline-size: 0;
+        }
+
+        /* Explorer in default slot: bounded height for file grid (matches minimal-shell policy). */
+        slot:not([name])::slotted([data-view="explorer"]) {
+            display: flex !important;
+            flex-direction: column !important;
+            min-block-size: 0 !important;
+            flex: 1 1 auto !important;
+            overflow: hidden !important;
         }
 
         &::-webkit-scrollbar {
@@ -167,6 +192,10 @@
         overflow: visible;
 
         & > * {
+            pointer-events: auto;
+        }
+
+        & > slot::slotted(*) {
             pointer-events: auto;
         }
     }
@@ -312,6 +341,10 @@
             display: none !important;
         }
 
+        .app-shell__underlying {
+            display: none !important;
+        }
+
         .app-shell__content {
             position: static !important;
             overflow: visible;
@@ -325,7 +358,8 @@
                 display: none;
             }
 
-            & > [data-view] {
+            & > [data-view],
+            & > slot:not([name])::slotted([data-view]) {
                 position: static !important;
                 inset: auto !important;
                 overflow: visible !important;

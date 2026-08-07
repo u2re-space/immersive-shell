@@ -2,7 +2,7 @@
  * HTTPS demo: immersive shell + default view `viewer` (markdown-view).
  * NOTE: Prepended Vite aliases in vite.config.js mirror CrossWord `shared/*` → subsystem/src.
  */
-import "fest/icon";
+import "@fest-lib/icon";
 import { bootImmersive } from "boot/ts/BootLoader";
 
 const app = document.querySelector<HTMLElement>("#app") ?? document.body;

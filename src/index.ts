@@ -11,7 +11,7 @@
  * - Single-component rendering
  */
 
-import { H } from "fest/lure";
+import { H } from "@fest-lib/lure";
 import type { ShellId, ShellLayoutConfig, ShellTheme } from "shells/types";
 
 // @ts-ignore - SCSS import

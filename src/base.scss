@@ -322,19 +322,95 @@
     }
 
     @media print {
+        /*
+         * WHY: CRX markdown boots immersive. Screen :host is `100dvh` + abspos `.app-shell`;
+         * paint/size clip + `break-avoid` on wrappers prints only page 1.
+         */
+        :host {
+            display: block !important;
+            position: static !important;
+            inset: auto !important;
+            overflow: visible !important;
+            contain: none !important;
+            container-type: normal !important;
+            content-visibility: visible !important;
+            inline-size: 100% !important;
+            block-size: auto !important;
+            min-block-size: 0 !important;
+            max-block-size: none !important;
+            height: auto !important;
+            min-height: 0 !important;
+            max-height: none !important;
+            align-self: start !important;
+            justify-self: stretch !important;
+        }
+
+        :is(html, body):has([data-shell="immersive"]),
+        :is(html, body):has(cw-shell-immersive) {
+            position: static !important;
+            inset: auto !important;
+            overflow: visible !important;
+            contain: none !important;
+            container-type: normal !important;
+            content-visibility: visible !important;
+            display: block !important;
+            inline-size: 100% !important;
+            block-size: auto !important;
+            min-block-size: 0 !important;
+            max-block-size: none !important;
+            height: auto !important;
+            min-height: 0 !important;
+            max-height: none !important;
+        }
+
+        :is(html, body):has([data-shell="immersive"]) #app,
+        :is(html, body):has(cw-shell-immersive) #app,
+        :is(html, body):has([data-shell="immersive"]) [data-app-layer-root],
+        :is(html, body):has(cw-shell-immersive) [data-app-layer-root],
+        :is(html, body):has([data-shell="immersive"]) [data-app-layer="shell"],
+        :is(html, body):has(cw-shell-immersive) [data-app-layer="shell"] {
+            display: contents !important;
+            position: static !important;
+            inset: auto !important;
+            overflow: visible !important;
+            contain: none !important;
+            container-type: normal !important;
+            block-size: auto !important;
+            max-block-size: none !important;
+            min-block-size: 0 !important;
+            height: auto !important;
+        }
+
+        cw-shell-immersive[data-shell="immersive"],
+        cw-shell-immersive {
+            display: block !important;
+            position: static !important;
+            inset: auto !important;
+            overflow: visible !important;
+            contain: none !important;
+            block-size: auto !important;
+            max-block-size: none !important;
+            min-block-size: 0 !important;
+            height: auto !important;
+        }
+
         .app-shell {
             background: white;
             color: black;
-            overflow: visible;
-            contain: none;
-
-            @media print {
-                display: contents !important;
-            }
+            overflow: visible !important;
+            contain: none !important;
+            display: contents !important;
+            position: static !important;
+            inset: auto !important;
+            block-size: auto !important;
+            max-block-size: none !important;
+            min-block-size: 0 !important;
         }
 
         .app-shell__viewport {
             display: contents !important;
+            overflow: visible !important;
+            contain: none !important;
         }
 
         .app-shell__overlays {
